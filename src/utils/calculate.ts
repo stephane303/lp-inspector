@@ -36,9 +36,12 @@ export async function queryContract(
     )
   );
 
+  console.log('userinfo', _userInfoResults);
+
   const _balances = _userInfoResults
     .map((result, poolId) => {
       const balance = contractAddress === AUTO ? result : result["0"];
+     
       return { pool: poolId, balance };
     })
     .filter((b) => b.balance !== "0");
@@ -56,6 +59,7 @@ export async function queryContract(
   });
 
   const completeBalance = await Promise.all(_balanceLPPair);
+  console.log('balance', completeBalance);
 
   callback(completeBalance);
 }
